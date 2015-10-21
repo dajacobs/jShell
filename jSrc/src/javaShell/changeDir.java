@@ -9,15 +9,16 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class changeDir {
-    public static String backSlash = "\\";
+    public static String slash = "/";
     public static void main(String[] args) throws IOException {
-        String commandLine = null;
+        String commandLine;
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         ProcessBuilder pb = new ProcessBuilder();
         
         while(true) {
             // Get the users input from stream
             System.out.print("jsh>");
+            commandLine = console.readLine();
             
             if(commandLine.equals("")) {
                 continue;
@@ -39,7 +40,7 @@ public class changeDir {
                 } else {
                     String arg = commands.get(commands.size() - 1);
                     System.out.println("Arguement passed: " +arg);
-                    String cPath = pb.directory() +backSlash +arg;
+                    String cPath = pb.directory() +slash +arg;
                     System.out.println("Path created: " +cPath);
                     File nPath = new File(cPath);
                     pb.directory(nPath);

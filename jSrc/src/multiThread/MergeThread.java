@@ -1,4 +1,4 @@
-package javaShell;
+package multiThread;
 
 public class MergeThread implements Runnable {
     private final Object[] list1;

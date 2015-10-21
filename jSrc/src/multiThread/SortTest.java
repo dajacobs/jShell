@@ -1,4 +1,6 @@
-package javaShell;
+package multiThread;
+
+import multiThread.MergeThread;
 
 public class SortTest {
     public static void main(String[] args) {

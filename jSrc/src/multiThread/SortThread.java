@@ -1,4 +1,4 @@
-package javaShell;
+package multiThread;
 
 import static java.util.Arrays.sort;
 

@@ -3,6 +3,7 @@ package javaShell;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -43,6 +44,19 @@ public class changeDir {
                     File nPath = new File(cPath);
                     pb.directory(nPath);
                     continue;
+                }
+            }
+            // Pass the commands to ProcessBuilder command
+            pb.command(commands);
+            Process proc  = pb.start();
+            
+            // Output stream to be returned from the proc
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            try (BufferedReader br = new BufferedReader(isr)) {
+                String line;
+                while((line = br.readLine()) != null) {
+                    System.out.println(line);
                 }
             }
         }

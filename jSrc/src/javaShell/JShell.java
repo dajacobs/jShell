@@ -14,31 +14,37 @@ public class JShell {
         String commandLine;
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         ProcessBuilder pb = new ProcessBuilder();
-        
+        ArrayList<String> history = new ArrayList<>();
         while(true) {
             // Get the users input from stream
             System.out.print("jsh>");
             commandLine = console.readLine();
+            history.add(commandLine);
             
             if(commandLine.equals("")) {
+                continue;
+            } else if(commandLine.equals("history")) {
+                for(int i = 0; i < history.size(); i++) {
+                    System.out.println(history.get(i));
+                }
                 continue;
             }
             // Save commands in array list
             StringTokenizer st = new StringTokenizer(commandLine);
-            ArrayList<String> history = new ArrayList<>();
+            ArrayList<String> commands = new ArrayList<>();
        
             while(st.hasMoreTokens()) {
-                history.add(st.nextToken());
+                commands.add(st.nextToken());
             }
             // Change directory command
-            if(history.contains("cd")) {
-                if(history.get(history.size() - 1).equals("cd")) {
+            if(commands.contains("cd")) {
+                if(commands.get(commands.size() - 1).equals("cd")) {
                     File home = new File(System.getProperty("user.home"));
                     System.out.println("Home directory: " +home);
                     pb.directory(home);
                     continue;
                 } else {
-                    String arg = history.get(history.size() - 1);
+                    String arg = commands.get(commands.size() - 1);
                     System.out.println("Arguement passed: " +arg);
                     String cPath = pb.directory() +slash +arg;
                     System.out.println("Path created: " +cPath);
@@ -46,16 +52,9 @@ public class JShell {
                     pb.directory(nPath);
                     continue;
                 }    
-            } else if(history.contains("history")) {
-                if(history.get(history.size() - 1).equals("history")) {
-                    for(int i = 0; i > history.size() - 1; i++) {
-                        System.out.println("["+i+"]" +history.get(i));
-                    }
-                    continue;
-                }
             }
             // Pass the commands to ProcessBuilder command
-            pb.command(history);
+            pb.command(commands);
             Process proc = pb.start();
             
             // Output stream to be returned from the proc
